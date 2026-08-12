@@ -1,10 +1,3 @@
-//
-//  ActionView.swift
-//  AnimalsIdentifier
-//
-//  Created by Leticia Gomes on 12/08/26.
-//
-
 import SwiftUI
 
 struct ActionView: View {
@@ -12,6 +5,7 @@ struct ActionView: View {
     @ViewBuilder
     var body: some View {
         
+        // MARK: Status mostrado na tela
         
         switch viewModel.status {
             

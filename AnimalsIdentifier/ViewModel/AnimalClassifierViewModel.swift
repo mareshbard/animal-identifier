@@ -1,5 +1,22 @@
 import Foundation
 
+
+enum ClassificationStatus: Equatable {
+    case idle
+    case analyzing
+    case result(ClassificationResult) // resultado acima ou igual ao threshold escolhido
+    case unknown(bestMatch: Animal?, confidence: Double?) // devolve o melhorzinho, se encontrado
+    case failure(String) // mostra erro
+    
+    static func decision(for result: ClassificationResult, threshold: Double) -> Self {
+        if result.confidence > threshold {
+            .result(result)
+        } else {
+            .unknown(bestMatch: result.animal, confidence: result.confidence)
+        }
+    }
+}
+
 // MARK: View model
 
 @MainActor // garante que o código sempre rode na thread principal, usado quando o modelo atualiza algo que UI observa

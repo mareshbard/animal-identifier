@@ -3,26 +3,6 @@ import SwiftUI
 import Observation
 import Vision
 
-// MARK: Status mostrado na tela
-enum ClassificationStatus: Equatable {
-    case idle
-    case analyzing
-    case result(ClassificationResult) // resultado acima ou igual ao threshold escolhido
-    case unknown(bestMatch: Animal?, confidence: Double?) // devolve o melhorzinho, se encontrado
-    case failure(String) // mostra erro
-    
-    static func decision(for result: ClassificationResult, threshold: Double) -> Self {
-        if result.confidence > threshold {
-            .result(result)
-        } else {
-            .unknown(bestMatch: result.animal, confidence: result.confidence)
-        }
-    }
-}
-
-
-
-// MARK: Tela de captura de foto
 
 struct AnimalClassifierView: View {
     @State private var viewModel = AnimalClassifierViewModel()
@@ -46,9 +26,7 @@ struct AnimalClassifierView: View {
             .scrollIndicators(.hidden)
         }
         .foregroundStyle(Color(.white))
-        .task {
-            await viewModel.prepareCamera()
-        }
+       
     }
 }
 

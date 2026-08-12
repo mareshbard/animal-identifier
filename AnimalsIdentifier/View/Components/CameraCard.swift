@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+@MainActor
 struct CameraCard: View {
     @State private var viewModel = AnimalClassifierViewModel()
     var body: some View {
@@ -28,11 +28,14 @@ struct CameraCard: View {
                 .stroke(.black, style: StrokeStyle(lineWidth: 2, dash: [10, 6]))
                 .padding(16)
         }
-        
+        .task {
+            await viewModel.prepareCamera()
+        }
         .frame(height: 400)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         
     }
+    
     
     private func cameraPlaceholder(icon: String, message: String) -> some View {
         VStack(spacing: 12) {

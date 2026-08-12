@@ -4,9 +4,19 @@ import FoundationModels
 
 struct AnimalCuriositiesView: View {
     @State private var language: String = "British"
-    let languages = ["English", "French", "German", "Portuguese"]
+    
+    let languages = [
+        "English",
+        "French",
+        "German",
+        "Portuguese"
+    ]
+    
     var animal: String
-    @State var response: AnimalFM = AnimalFM(name: "Cat", phrases: ["Cats are amazing"])
+    @State var response: AnimalFM = AnimalFM(
+        name: "Cat",
+        phrases: ["Cats are amazing"]
+    )
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -35,8 +45,8 @@ struct AnimalCuriositiesView: View {
                 }
             }
         }
-       // .padding(24)
     }
+    
     func generate(lang: String, animal: String) async -> AnimalFM? {
 
         do {
