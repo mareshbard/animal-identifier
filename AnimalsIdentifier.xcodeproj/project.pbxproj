@@ -29,11 +29,6 @@
 			path = AnimalsIdentifier;
 			sourceTree = "<group>";
 		};
-		ADCDF406302A0E1E003F06C2 /* Camera */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Camera;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +47,6 @@
 			children = (
 				ADCDF39C3029EE0E003F06C2 /* AnimalsIdentifier */,
 				ADCDF39B3029EE0E003F06C2 /* Products */,
-				ADCDF406302A0E1E003F06C2 /* Camera */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,7 +75,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				ADCDF39C3029EE0E003F06C2 /* AnimalsIdentifier */,
-				ADCDF406302A0E1E003F06C2 /* Camera */,
 			);
 			name = AnimalsIdentifier;
 			packageProductDependencies = (

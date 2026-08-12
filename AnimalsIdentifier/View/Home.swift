@@ -9,9 +9,9 @@ struct ContentView: View {
     
     var body: some View {
        TabView {
-            LiveClassificationView()
+            AnimalClassifierView()
                .tabItem {
-                   Label("Live", systemImage: "camera.viewfinder")
+                   Label("Live", systemImage: "camera.viewfinder")//
                }
                PhotoClassificationView()
                .tabItem {

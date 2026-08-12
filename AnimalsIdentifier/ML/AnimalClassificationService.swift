@@ -1,6 +1,7 @@
 import CoreML
 import Foundation
 import Vision
+import UIKit
 
 enum ClassificationError: Error {
     case message(String)
@@ -29,7 +30,7 @@ class AnimalClassificationService {
         return try interpret(observations)
     }
     
-    
+ 
     // carregando modelo
     private func loadModel() throws -> MLModel {
         
@@ -111,6 +112,30 @@ class AnimalClassificationService {
             throw ClassificationError.message("Unknown animal detected")
         }
         return ClassificationResult(animal: animal, confidence: Double(best.confidence))
+    }
+    // reescrever
+    func classify2(_ image: UIImage) throws -> VNClassificationObservation? {
+        let mlModel = try loadModel()
+        guard let cg = image.cgImage else { return nil }
+        do {
+            let vnModel = try VNCoreMLModel(for: mlModel)
+            let request = VNCoreMLRequest(model: vnModel)
+            let handler = VNImageRequestHandler(cgImage: cg, orientation: .up)
+            try handler.perform([request])
+            
+            let results = (request.results as? [VNClassificationObservation]) ?? []
+            let sorted  = results.sorted { $0.confidence > $1.confidence }
+            let top5    = sorted.prefix(5).map { "\($0.identifier)=\(Int($0.confidence * 100))%" }
+            print("Top5 (photo):", top5.joined(separator: ", "))
+
+            return sorted.first
+        } catch {
+            print(error)
+        }
+        
+       return nil
+       // request.imageCropAndScaleOption = .scaleFit
+    
     }
     
 }
