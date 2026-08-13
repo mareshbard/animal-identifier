@@ -4,7 +4,7 @@ import Vision
 import Foundation
 import AVFoundation
 
-
+@MainActor
 struct PhotoClassificationView: View {
     @State private var selectedItem: PhotosPickerItem?
     @State private var selectedImage: UIImage?
@@ -23,7 +23,7 @@ struct PhotoClassificationView: View {
 
                 
                 VStack(spacing: 16) {
-                    HeaderView(title: "Animal identifier", symbol: "cat", subtitle: "Escolha uma imagem para identificar o animal.")
+                    HeaderView(title: "Animal identifier", symbol: "cat", subtitle: "Choose a picture to identify an animal")
                         
                     if let img = selectedImage {
                         
@@ -33,7 +33,7 @@ struct PhotoClassificationView: View {
                             .frame(maxHeight: 400)
                     }
                     PhotosPicker(selection: $selectedItem, matching: .images) {
-                        Label("Escolha uma imagem", systemImage: "photo")
+                        Label("Choose an image", systemImage: "photo")
                             .tint(Color.white)
                     }
                     
@@ -54,10 +54,10 @@ struct PhotoClassificationView: View {
                     //jogar isso no service
                     
                     if let result = (photoResult?.confidence ?? 0 > 0.4 ? photoResult : nil) {
-                        Text("\(result.identifier), \(Int(result.confidence * 100))%")
+                        Text("Probably: \(result.identifier.uppercased(with: Locale.current)), \(Int(result.confidence * 100))%")
                             .font(.headline)
                     } else {
-                        Text("Não identificado")
+                        Text("Unidentified...")
                             .foregroundColor(Color.white)
                     }
                 }

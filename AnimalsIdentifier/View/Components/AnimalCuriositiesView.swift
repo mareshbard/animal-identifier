@@ -29,13 +29,12 @@ struct AnimalCuriositiesView: View {
             .pickerStyle(SegmentedPickerStyle())
 
             VStack(alignment: .leading) {
-                Text("Animal:")
+                Text("About:")
                     .font(.title)
                     .padding(.bottom)
                 Text("Name: \(response.name)")
                 ForEach(response.phrases, id: \.self) { ph in
                     Text("\(ph)")
-                    
                 }
             }
             
