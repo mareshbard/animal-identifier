@@ -113,29 +113,26 @@ class AnimalClassificationService {
         }
         return ClassificationResult(animal: animal, confidence: Double(best.confidence))
     }
-    // reescrever
+    
+    
     func classify2(_ image: UIImage) throws -> VNClassificationObservation? {
         let mlModel = try loadModel()
         guard let cg = image.cgImage else { return nil }
         do {
-            let vnModel = try VNCoreMLModel(for: mlModel)
+            let vnModel = try VNCoreMLModel(for: mlModel) // usado para tarefas de reconhecimento visual
             let request = VNCoreMLRequest(model: vnModel)
             let handler = VNImageRequestHandler(cgImage: cg, orientation: .up)
             try handler.perform([request])
-            
-            let results = (request.results as? [VNClassificationObservation]) ?? []
+        let results = (request.results as? [VNClassificationObservation]) ?? []
             let sorted  = results.sorted { $0.confidence > $1.confidence }
-            let top5    = sorted.prefix(5).map { "\($0.identifier)=\(Int($0.confidence * 100))%" }
-            print("Top5 (photo):", top5.joined(separator: ", "))
-
+            let top5 = sorted.prefix(5).map { "\($0.identifier)=\(Int($0.confidence * 100))%" }
+            print(top5)
             return sorted.first
+            
         } catch {
             print(error)
         }
-        
-       return nil
-       // request.imageCropAndScaleOption = .scaleFit
-    
+        return nil
     }
     
 }

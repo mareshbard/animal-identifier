@@ -85,11 +85,8 @@ struct AnimalClassifierView: View {
                 .padding(24)
                 
             case .result(let classificationResult):
-                
-                Button("Try again", action: viewModel.tryAgain)
-                    .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.black)
-                    .controlSize(.large)
+                Text("Probably: \(classificationResult.animal.displayName), \(Int(classificationResult.confidence * 100))%")
+               // ResultCard(title: classificationResult.animal.displayName, message: "Probably is this animal", confidence: classificationResult.confidence, accent: .white, onTryAgain: viewModel.tryAgain)
                 
                 AnimalCuriositiesView(animal: classificationResult.animal.displayName)
                 

@@ -15,33 +15,35 @@ struct AnimalCuriositiesView: View {
     var animal: String
     @State var response: AnimalFM = AnimalFM(
         name: "Cat",
-        phrases: ["Cats are amazing"]
+        phrases: []
     )
 
     var body: some View {
         VStack(alignment: .leading) {
             
-            Picker("Type", selection: $language) {
-                ForEach(languages, id: \.self) { l in
-                    Text(l)
+                
+                Text("Select a language:")
+                Picker("Type", selection: $language) {
+                    ForEach(languages, id: \.self) { l in
+                        Text(l)
+                    }
                 }
-            }
-            .pickerStyle(SegmentedPickerStyle())
+                .pickerStyle(SegmentedPickerStyle())
+            if !response.phrases.isEmpty {
+                VStack(alignment: .leading) {
 
-            VStack(alignment: .leading) {
-                Text("About:")
-                    .font(.title)
-                    .padding(.bottom)
-                Text("Name: \(response.name)")
-                ForEach(response.phrases, id: \.self) { ph in
-                    Text("\(ph)")
+                    Text("Name: \(response.name)")
+                    ForEach(response.phrases, id: \.self) { ph in
+                        Text("\(ph)")
+                    }
                 }
+                
+               
             }
-            
-            .onChange(of: language) {
-                Task {
-                    response = await generate(lang: language, animal: animal) ?? AnimalFM(name: "Cat", phrases: ["Cats are amazing"])
-                }
+        }
+        .onChange(of: language) {
+            Task {
+                response = await generate(lang: language, animal: animal) ?? AnimalFM(name: "Cat", phrases: ["Cats are amazing"])
             }
         }
     }
